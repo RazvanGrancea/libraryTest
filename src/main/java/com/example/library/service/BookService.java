@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class BookService {
 
-
+    @Autowired
     private BookRepo bookRepo;
 
 
