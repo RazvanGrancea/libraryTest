@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Table(name = "Books")
+@Table(name = "books")
 @Entity
 @Data
 @NoArgsConstructor
@@ -22,6 +22,8 @@ public class Book {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+  @Column
   private String title;
+  @Column
   private String author;
 }
