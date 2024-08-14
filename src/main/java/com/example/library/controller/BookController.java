@@ -1,21 +1,17 @@
 package com.example.library.controller;
 
-import com.example.library.model.Book;
-import com.example.library.repo.BookRepo;
+import com.example.library.dto.BookRequestDTO;
+import com.example.library.dto.BookResponseDTO;
 import com.example.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("bookList")
+@RequestMapping("/api/books")
 public class BookController {
 
     @Autowired
@@ -23,51 +19,42 @@ public class BookController {
 
 
     @GetMapping
-    public ResponseEntity<List<Book>> getAllBooks(){
-        List<Book> bookList = bookService.getAllBooks();
-        return ResponseEntity.ok(bookList);
+    public ResponseEntity<List<BookResponseDTO>> getAllBooks() {
+        List<BookResponseDTO> books = bookService.getAllBooks();
+        return ResponseEntity.ok(books);
     }
+
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable Long id){
-        Optional<Book> bookOptional = bookService.getBookById(id);
-        return bookOptional
-                .map(book -> ResponseEntity.ok(book))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-
+    public ResponseEntity<BookResponseDTO> getBookById(@PathVariable Long id) {
+        BookResponseDTO book = bookService.getBookById(id);
+        return ResponseEntity.ok(book);
     }
+
 
     @PostMapping
-    @Tag(name = "Add Book")
-    public ResponseEntity<Book> addBook(@RequestBody Book book){
-        bookService.addBook(book);
-        return new ResponseEntity<>(book, HttpStatus.OK);
-
+    public ResponseEntity<BookResponseDTO> addBook(@RequestBody BookRequestDTO bookRequestDTO) {
+        BookResponseDTO book = bookService.addBook(bookRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(book);
     }
+
+
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBookById(@PathVariable Long id, @RequestBody Book newBookData){
-         Optional<Book>  updatedBook = bookService.updateBookById(id, newBookData);
-        return updatedBook
-                .map(book -> ResponseEntity.ok(book))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-
-
-
+    public ResponseEntity<BookResponseDTO> updateBookById(@PathVariable Long id, @RequestBody BookRequestDTO bookRequestDTO) {
+        BookResponseDTO book = bookService.updateBookById(id, bookRequestDTO);
+        return ResponseEntity.ok(book);
     }
+
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBookByID(@PathVariable Long id){
-        if (bookService.getBookById(id).isPresent()){
-            bookService.deleteBookById(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
+    public ResponseEntity<Void> deleteBookById(@PathVariable Long id) {
+        bookService.deleteBookById(id);
+        return ResponseEntity.noContent().build();
     }
+
     @DeleteMapping
-    public ResponseEntity<Void> deleteAllBooks(){
+    public ResponseEntity<Void> deleteAllBooks() {
         bookService.deleteAllBooks();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 }

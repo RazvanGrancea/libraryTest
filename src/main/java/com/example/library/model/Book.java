@@ -1,29 +1,26 @@
 package com.example.library.model;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
-@Table(name = "books")
 @Entity
+@Table(name = "books")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
-
 public class Book {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Column
+
+  @Column(nullable = false)
   private String title;
-  @Column
-  private String author;
+
+  @ManyToOne
+  @JoinColumn(name = "author_id")
+  private Author author;
 }
+
