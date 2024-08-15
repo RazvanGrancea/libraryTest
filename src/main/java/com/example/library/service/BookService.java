@@ -39,7 +39,6 @@ public class BookService {
     }
 
     public BookResponseDTO addBook(BookRequestDTO bookRequestDTO) {
-        // Căutăm autorul după ID
         Optional<Author> optionalAuthor = authorRepo.findById(bookRequestDTO.getAuthorId());
         if (optionalAuthor.isEmpty()) {
             throw new RuntimeException("Author not found");
@@ -47,7 +46,6 @@ public class BookService {
 
         Author author = optionalAuthor.get();
 
-        // Creăm și salvăm cartea
         Book book = bookMapper.toEntity(bookRequestDTO);
         book.setAuthor(author);
 

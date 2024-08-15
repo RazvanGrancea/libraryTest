@@ -9,7 +9,7 @@ import org.mapstruct.Mappings;
 
 import java.util.Set;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = BookMapper.class)
 public interface AuthorMapper {
 
     @Mappings({
