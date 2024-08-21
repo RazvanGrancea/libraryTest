@@ -2,8 +2,10 @@ package com.example.library.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.builder.ToStringExclude;
 
 @Entity
 @Table(name = "books")
@@ -21,6 +23,8 @@ public class Book {
 
   @ManyToOne
   @JoinColumn(name = "author_id")
+  @EqualsAndHashCode.Exclude
+  @ToStringExclude
   private Author author;
 }
 
