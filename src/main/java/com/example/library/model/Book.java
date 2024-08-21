@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.builder.ToStringExclude;
+import lombok.ToString.Exclude;
 
 @Entity
 @Table(name = "books")
@@ -13,7 +13,6 @@ import org.apache.commons.lang3.builder.ToStringExclude;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Book {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -24,7 +23,7 @@ public class Book {
   @ManyToOne
   @JoinColumn(name = "author_id")
   @EqualsAndHashCode.Exclude
-  @ToStringExclude
+  @Exclude
   private Author author;
 }
 
