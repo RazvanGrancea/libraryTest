@@ -11,10 +11,11 @@ public class VisitorCounter {
     }
 
     return Arrays.stream(stats)
-        .filter(Objects::nonNull) // filter out null maps (element arrays)
+        .filter(Objects::nonNull) // filter out null maps (null elements from the array)
         .flatMap(map -> map.entrySet().stream())  // flatten the list of maps into a stream of entries
         .filter(entry -> isParsableToLong(entry.getKey())) // filter String keys that are not parseable to Longs
-        .filter(entry -> entry.getValue() != null && entry.getValue().getVisitCount().isPresent()) // filter UserStats values that are null or have the visitCount absent
+        .filter(entry -> entry.getValue() != null) // filter UserStats values that are null
+        .filter(entry -> entry.getValue().getVisitCount().isPresent()) // filter UserStats values that are absent
         .collect(Collectors.toMap(
             entry -> Long.parseLong(entry.getKey()), // map String keys to Long, these are the final user ids longs
             entry -> entry.getValue().getVisitCount().get(), // map UserStats to visitCount Long value
