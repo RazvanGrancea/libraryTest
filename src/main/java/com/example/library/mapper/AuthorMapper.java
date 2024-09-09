@@ -13,7 +13,9 @@ import java.util.Set;
 public interface AuthorMapper {
 
     @Mappings({
-            @Mapping(source = "books", target = "books")
+            @Mapping(source = "books", target = "books"),
+            @Mapping(source = "age", target = "age"),
+            @Mapping(source = "email", target = "email")
     })
     AuthorResponseDTO toDTO(Author author);
 
