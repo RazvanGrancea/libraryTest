@@ -8,5 +8,7 @@ public class AuthorResponseDTO {
     private Long id;
     private String name;
     private Set<BookResponseDTO> books;
+    private Integer age;
+    private String email;
 
 }

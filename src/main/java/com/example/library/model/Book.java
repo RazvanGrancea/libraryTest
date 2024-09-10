@@ -25,5 +25,8 @@ public class Book {
   @EqualsAndHashCode.Exclude
   @Exclude
   private Author author;
+
+  @Column
+  private String description;
 }
 

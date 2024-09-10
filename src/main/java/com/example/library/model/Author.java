@@ -21,6 +21,12 @@ public class Author {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private Integer age;
+
+    @Column
+    private String email;
+
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Book> books = new HashSet<>();
 }
