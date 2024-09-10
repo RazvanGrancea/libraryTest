@@ -6,4 +6,8 @@ import lombok.Data;
 public class AuthorRequestDTO {
     private String name;
 
+    private Integer age;
+
+    private String email;
+
 }
